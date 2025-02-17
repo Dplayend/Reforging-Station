@@ -1,0 +1,139 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
+    id 'org.spongepowered.mixin' version '0.7+'
+}
+
+apply plugin: 'org.spongepowered.mixin'
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = mod_id
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: mapping_channel, version: minecraft_version
+    copyIdeResources = true
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+            arg "-mixin.config=reforgingstation.mixins.json"
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+        }
+
+        client {
+            arg "-mixin.config=reforgingstation.mixins.json"
+            property 'forge.enabledGameTestNamespaces', "reforgingstation"
+        }
+
+        server {
+            arg "-mixin.config=reforgingstation.mixins.json"
+            property 'forge.enabledGameTestNamespaces', "reforgingstation"
+            args '--nogui'
+        }
+
+        gameTestServer {
+            arg "-mixin.config=reforgingstation.mixins.json"
+            property 'forge.enabledGameTestNamespaces', "reforgingstation"
+        }
+
+        data {
+            arg "-mixin.config=reforgingstation.mixins.json"
+            workingDirectory project.file('run-data')
+            args '--mod', "reforgingstation", '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    maven { url = "https://maven.shedaniel.me/" }
+    maven { url = "https://maven.theillusivec4.top/" }
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    //compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
+    //implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.4.1")) {jarJar.ranged(it, "[0.4.1,)")}
+    implementation "me.shedaniel.cloth:cloth-config-forge:${clothconfig_version}"
+
+    implementation fg.deobf("curse.maven:jei-238222:5739402")
+    //implementation fg.deobf("curse.maven:quality_equipment-667174:5523943")
+    implementation(fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api"))
+    implementation(fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}"))
+
+    implementation fg.deobf("curse.maven:charmofundying-316873:5159193")
+    implementation fg.deobf("curse.maven:dummmmmmy-225738:5737040")
+
+    implementation fg.deobf("curse.maven:Fishing-511385:5025353")
+
+    implementation fg.deobf("curse.maven:monolib-968432:5443121")
+    //implementation fg.deobf("curse.maven:morebowsandarrows-888468:5091651")
+
+    //implementation fg.deobf("curse.maven:Neat-238372:5728641")
+
+    implementation fg.deobf("curse.maven:moonlight-499980:5785055")
+    implementation fg.deobf("curse.maven:justpotionrings-1113500:5820786")
+
+    implementation fg.deobf("curse.maven:ToolBelt-260262:5393183")
+    implementation fg.deobf("curse.maven:CaelusAPI-308989:5281700")
+    implementation fg.deobf("curse.maven:ElytraSlot-317716:5778734")
+
+    implementation fg.deobf("curse.maven:SophisticatedCore-618298:6190554")
+    implementation fg.deobf("curse.maven:SophisticatedBackpacks-422301:6194202")
+
+    implementation fg.deobf("curse.maven:MoonlightLib-499980:6199133")
+    implementation fg.deobf("curse.maven:MapAtlases-519759:6145606")
+    //implementation fg.deobf("curse.maven:annihilation-recreated-1114125:5916627")
+    //implementation fg.deobf("curse.maven:artifacts-312353:5693342")
+    //implementation fg.deobf("curse.maven:architectury-419699:5137938")
+    //implementation ("com.dplayend.reforgingstation:reforgingstation-forge-1.20.x-v1.0")
+}
+
+mixin {
+    add sourceSets.main, "reforgingstation.refmap.json"
+    config "reforgingstation.mixins.json"
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : mod_author,
+                'Specification-Version'   : '1',
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : mod_author,
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                "MixinConfigs"            : "reforgingstation.mixins.json"
+        ])
+    }
+    finalizedBy 'reobfJar'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+sourceSets.each {
+    def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
+    it.output.resourcesDir = dir
+    it.java.destinationDirectory = dir
+}

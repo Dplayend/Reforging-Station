@@ -1,0 +1,12 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="All Rights Reserved"
+issueTrackerURL="https://github.com/Dplayend/Reforging-Station/issues"
+[[mods]]
+modId="reforgingstation"
+version="1.0"
+displayName="Reforging Station"
+authors="Dplayend"
+description=''''''
+displayURL="https://www.curseforge.com/minecraft/mc-mods/reforging-station"
+logoFile="icon.png"

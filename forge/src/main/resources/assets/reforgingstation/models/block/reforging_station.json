@@ -1,0 +1,92 @@
+{
+	"credit": "Made by Dplayend",
+	"parent": "reforgingstation",
+	"texture_size": [64, 64],
+	"textures": {
+		"particle": "block/anvil",
+		"1": "reforgingstation:block/reforging_station"
+	},
+	"elements": [
+		{
+			"name": "reforging_station",
+			"from": [0, 0, 0],
+			"to": [16, 14, 16],
+			"faces": {
+				"north": {"uv": [4, 0, 8, 3.5], "texture": "#1"},
+				"east": {"uv": [4, 3.5, 8, 7], "texture": "#1"},
+				"south": {"uv": [4, 7, 8, 10.5], "texture": "#1"},
+				"west": {"uv": [0, 8, 4, 11.5], "texture": "#1"},
+				"up": {"uv": [4, 4, 0, 0], "texture": "#1"},
+				"down": {"uv": [4, 4, 0, 8], "texture": "#1"}
+			}
+		},
+		{
+			"name": "head",
+			"from": [2, 14, 9],
+			"to": [5, 15, 11],
+			"rotation": {"angle": 45, "axis": "y", "origin": [3.5, 14.3, 8]},
+			"faces": {
+				"north": {"uv": [12.5, 0.5, 13.25, 1], "texture": "#1"},
+				"east": {"uv": [12.5, 1, 13, 1.25], "texture": "#1"},
+				"south": {"uv": [12.5, 0.5, 13.25, 1], "texture": "#1"},
+				"west": {"uv": [12.5, 1, 13, 1.25], "texture": "#1"},
+				"up": {"uv": [12.5, 0, 13.25, 0.5], "texture": "#1"},
+				"down": {"uv": [12.5, 0, 13.25, 0.5], "texture": "#1"}
+			}
+		},
+		{
+			"name": "base",
+			"from": [3, 13.7, 5],
+			"to": [4, 14.7, 9],
+			"rotation": {"angle": 45, "axis": "y", "origin": [3.5, 14.3, 8]},
+			"faces": {
+				"north": {"uv": [12.75, 2, 13, 2.25], "texture": "#1"},
+				"east": {"uv": [12, 1.25, 13, 1.5], "texture": "#1"},
+				"south": {"uv": [12.5, 2, 12.75, 2.25], "texture": "#1"},
+				"west": {"uv": [12, 1.25, 13, 1.5], "texture": "#1"},
+				"up": {"uv": [12, 1.25, 12.25, 2.25], "texture": "#1"},
+				"down": {"uv": [12.25, 1.25, 12.5, 2.25], "texture": "#1"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 2.5, 0],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 45, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 225, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.25, 0.25, 0.25]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"scale": [0.625, 0.625, 0.625]
+		},
+		"fixed": {
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		0,
+		{
+			"name": "hammer",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [1, 2]
+		}
+	]
+}
